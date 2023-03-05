@@ -1,4 +1,8 @@
-import { singInWithGoogle } from "../../firebase/providers";
+import {
+  singInWithGoogle,
+  registerUserWithEmailAndPassword,
+  loginWithEmailAndPassword,
+} from "../../firebase/providers";
 import { checkingCredentials, login, logout } from "./";
 
 export const checkingAuthentication = () => {
@@ -13,6 +17,37 @@ export const checkingGoogleSignIn = () => {
     // console.log({ result });
     if (!result.ok) return dispatch(logout(result.errorMessage));
 
+    dispatch(login(result));
+  };
+};
+
+export const startRegisteringUserWithEmailAndPassword = ({
+  email,
+  password,
+  displayName,
+}) => {
+  return async (dispatch) => {
+    dispatch(checkingCredentials());
+
+    const { ok, uid, photoURL, errorMessage } =
+      await registerUserWithEmailAndPassword({
+        email,
+        password,
+        displayName,
+      });
+    // el errorMsg sría si el user ya existe, las credenciales no coinciden, etc
+    if (!ok) return dispatch(logout({ errorMessage }));
+    dispatch(login({ uid, displayName, email, photoURL }));
+  };
+};
+
+export const startLoginWithEmailPassword = ({ email, password }) => {
+  return async (dispatch) => {
+    dispatch(checkingCredentials());
+
+    const result = await loginWithEmailAndPassword({ email, password });
+    // console.log(result);
+    if (!result.ok) return dispatch(logout(result));
     dispatch(login(result));
   };
 };

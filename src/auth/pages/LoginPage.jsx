@@ -1,7 +1,11 @@
 // Tanto los hooks de react, como el react-redux y el react-router dom tienen más importancia que los demás, por lo que, es recomendale situarlos como primeros
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkingAuthentication, checkingGoogleSignIn } from "../../store/auth";
+import {
+  checkingAuthentication,
+  checkingGoogleSignIn,
+  startLoginWithEmailPassword,
+} from "../../store/auth";
 import { Link as RouterLink } from "react-router-dom";
 
 // Luego van las importaciones de terceros y mis componentes/hooks
@@ -23,7 +27,8 @@ export const LoginPage = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(checkingAuthentication());
+    // dispatch(checkingAuthentication());
+    dispatch(startLoginWithEmailPassword({ email, password }));
     // console.log(formState);
   };
 
