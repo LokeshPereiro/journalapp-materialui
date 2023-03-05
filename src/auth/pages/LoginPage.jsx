@@ -9,13 +9,20 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 
 // Luego van las importaciones de terceros y mis componentes/hooks
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 
 export const LoginPage = () => {
-  const { status } = useSelector((state) => state.auth);
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
   const isAuthenticating = useMemo(() => status === "Checking", [status]);
 
@@ -38,7 +45,10 @@ export const LoginPage = () => {
   };
   return (
     <AuthLayout title="Login">
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="animate__animated animate_fadeIn animate_faster"
+      >
         <Grid container>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} sx={{ mt: 0.5 }}>
@@ -63,6 +73,16 @@ export const LoginPage = () => {
                 value={password}
                 onChange={onInputChange}
               />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              sx={{ mt: 1 }}
+              display={!!errorMessage ? "" : "none"}
+            >
+              <Alert severity="error">{errorMessage}</Alert>
             </Grid>
           </Grid>
           <Grid container spacing={1} sx={{ mt: 0.5 }}>

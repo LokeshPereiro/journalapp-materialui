@@ -1,14 +1,26 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthRoutes } from "../auth/routes";
+import { useCheckAuth } from "../hooks";
 import { JournalRoutes } from "../journal/routes";
+import { CheckingAuth } from "../ui/CheckingAuth";
 
 export const AppRouter = () => {
+  const { status } = useCheckAuth();
+  if (status === "Checking") {
+    return <CheckingAuth />;
+  }
   return (
     <Routes>
-      {/* Login & Register */}
-      <Route path="auth/*" element={<AuthRoutes />} />
       {/* Jornal Private Routes */}
-      <Route path="/*" element={<JournalRoutes />} />
+
+      {status === "Authenticated" ? (
+        <Route path="/*" element={<JournalRoutes />} />
+      ) : (
+        <Route path="auth/*" element={<AuthRoutes />} />
+      )}
+      <Route path="/*" element={<Navigate to="auth/login" />} />
+
+      {/* Login & Register */}
     </Routes>
   );
 };
