@@ -8,6 +8,11 @@ export const useForm = (initialForm = {}, formValidator = {}) => {
     createValidators();
   }, [formState]);
 
+  // Se tiene que redibujar de nuevo cuando cambios algo en el form
+  useEffect(() => {
+    setFormState(initialForm);
+  }, [initialForm]);
+
   const isValidForm = useMemo(() => {
     // Estoy recorriendo la propiedades para saber si su valor es null(de no ser lo el formulario no es válido )
     for (const formValues of Object.keys(formValidation)) {

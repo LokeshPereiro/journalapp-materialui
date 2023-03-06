@@ -21,16 +21,17 @@ import { Google } from "@mui/icons-material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 
+const formData = {
+  email: "",
+  password: "",
+};
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const isAuthenticating = useMemo(() => status === "Checking", [status]);
 
   const dispatch = useDispatch();
-  const { email, password, onInputChange, formState } = useForm({
-    email: "",
-    password: "",
-  });
+  const { email, password, onInputChange, formState } = useForm(formData);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
