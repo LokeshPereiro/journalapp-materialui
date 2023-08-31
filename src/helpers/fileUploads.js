@@ -5,7 +5,7 @@ export const fileUploads = async (files) => {
   if (!files)
     throw new Error("No seleccionaste los archivos que quieres subir");
   formData.append("file", files);
-  formData.append("upload_preset", "react-journal");
+  formData.append("upload_preset", "react-journalapp");
 
   try {
     const resp = await fetch(import.meta.env.VITE_CLOUDINARY_API_URL, {
@@ -18,7 +18,7 @@ export const fileUploads = async (files) => {
     // console.log({ cloudResp });
     return cloudResp.secure_url;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error(error.message);
   }
 };

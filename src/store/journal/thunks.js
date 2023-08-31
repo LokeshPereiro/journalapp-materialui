@@ -23,6 +23,7 @@ export const startNewNote = () => {
     const newNote = {
       title: "",
       body: "",
+      imageUrls: [],
       date: new Date().getTime(),
     };
     // Conx with firebase
@@ -30,9 +31,8 @@ export const startNewNote = () => {
     const newDoc = doc(collection(FirebaseDB, `${uid}/journal/notes`));
     await setDoc(newDoc, newNote);
 
-    // Creamos la propieda 'id' para el newNote
+    // Creamos la propieda 'id' para el newNote para poder insertarla en mi db
     newNote.id = newDoc.id;
-    // dispatch
     dispatch(addNewEmptyNotes(newNote));
     dispatch(setActiveNote(newNote));
   };
