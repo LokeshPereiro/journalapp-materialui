@@ -1,34 +1,36 @@
 import {
-  signInWithPopup,
   GoogleAuthProvider,
+  signInWithPopup,
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
 import { FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider();
 
+//Se va a llamar en los thunks
 export const singInWithGoogle = async () => {
   try {
+    // Aquí nos info completo acerca de como se obtuvo las credenciales
+    // const credentials = GoogleAuthProvider.credentialFromResult(result);
+    // console.log({ credentials });
+
     // mi config + el proveedor google
     const result = await signInWithPopup(FirebaseAuth, googleProvider);
-
-    const { displayName, photoURL, email, uid } = result.user;
+    // console.log(result.user);
+    const { displayName, uid, photoURL, email } = result.user;
     // console.log(user);
 
     return {
       ok: true,
-      //  UserInfo
+      // UserInfo
+      uid,
       displayName,
       photoURL,
       email,
-      uid,
     };
-
-    // Aquí nos info completo acerca de como se obtuvo las credenciales
-    // const credentials = GoogleAuthProvider.credentialFromResult(result);
-    // console.log({ credentials });
   } catch (error) {
     // console.log(error);
     const errorMessage = error.message;
@@ -39,18 +41,14 @@ export const singInWithGoogle = async () => {
   }
 };
 
-export const registerUserWithEmailAndPassword = async ({
-  email,
-  password,
-  displayName,
-}) => {
+export const registerUserWithEmailAndPassword = async ({ email, password }) => {
   try {
     const result = await createUserWithEmailAndPassword(
       FirebaseAuth,
       email,
       password
     );
-    const { photoURL, uid } = result.user;
+    const { displayName, photoURL, uid } = result.user;
     // console.log(result);
     // Actualizar el displayName en firebase
     await updateProfile(FirebaseAuth.currentUser, { displayName });
@@ -65,7 +63,7 @@ export const registerUserWithEmailAndPassword = async ({
     const errorMessage = error.message;
     return {
       ok: false,
-      errorMessage: "El usuario ya existe en Firebase",
+      errorMessage: errorMessage,
     };
   }
 };

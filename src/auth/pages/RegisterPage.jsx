@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Alert,
@@ -7,29 +9,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { AuthLayout } from "../layout/AuthLayout";
-import { useForm } from "../../hooks";
-import { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { startRegisteringUserWithEmailAndPassword } from "../../store/auth";
-// Por si queremos datos por defecto para no estar escribiendo...
-// const defaultFormData = {
-//   displayName: "Chanchito Perez",
-//   email: "chanchito@perez.com",
-//   password: "chan123",
-// };
 
-const formValidator = {
-  email: [(value) => value.includes("@"), "El correo no tiene @"],
-  password: [
-    (value) => value.length >= 6,
-    "La contraseña al menos tiene que tener 6 caracteres",
-  ],
-  displayName: [
-    (value) => value.length >= 3,
-    "El nombre es obligatorio y debe tener al menos 3 carcteres",
-  ],
-};
+import { useForm } from "../../hooks";
+import { AuthLayout } from "../layout/AuthLayout";
+import { startRegisteringUserWithEmailAndPassword } from "../../store/auth";
+import { formValidator } from "../../helpers";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -45,7 +29,6 @@ export const RegisterPage = () => {
     email,
     password,
     onInputChange,
-    onResetForm,
     formState,
     isValidForm,
     displayNameValid,
@@ -53,9 +36,9 @@ export const RegisterPage = () => {
     passwordValid,
   } = useForm(
     {
-      displayName: "",
       email: "",
       password: "",
+      displayName: "",
     },
     formValidator
   );
@@ -66,7 +49,7 @@ export const RegisterPage = () => {
     evt.preventDefault();
     setformSubmited(true);
 
-    if (!isValidForm) retrun;
+    if (!isValidForm) return;
     // alert(JSON.stringify(formState));
     // onResetForm();
     dispatch(startRegisteringUserWithEmailAndPassword(formState));

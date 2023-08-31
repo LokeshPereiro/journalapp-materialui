@@ -28,18 +28,20 @@ const formData = {
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
+  //Deshabilitar los botones para cuando estemos en checking
   const isAuthenticating = useMemo(() => status === "Checking", [status]);
 
   const dispatch = useDispatch();
   const { email, password, onInputChange, formState } = useForm(formData);
 
+  // Autenticación con el Submit Normal
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // dispatch(checkingAuthentication());
     dispatch(startLoginWithEmailPassword({ email, password }));
     // console.log(formState);
   };
 
+  // Autenticación con el Google
   const onGoogleSignIn = () => {
     // console.log("Google sing in..");
     dispatch(checkingGoogleSignIn());
