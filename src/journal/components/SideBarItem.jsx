@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { setActiveNote } from "../../store/journal";
+// import { setActiveNote } from "../../store/journal";
 import { TurnedInNot } from "@mui/icons-material";
 import {
   Grid,
@@ -14,7 +14,7 @@ export const SideBarItem = ({ title = "", body, id, date, imageUrls = [] }) => {
   const dispatch = useDispatch();
 
   const onClickNote = () => {
-    dispatch(setActiveNote({ title, body, id, date, imageUrls }));
+    // dispatch(setActiveNote({ title, body, id, date, imageUrls }));
   };
   const newTitle = useMemo(() => {
     return title.length > 17 ? title.substring(0, 17) + "..." : title;

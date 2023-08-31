@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoadingNotes } from "../store/journal";
+// import { startLoadingNotes } from "../store/journal";
 import { login, logout } from "../store/auth";
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,7 +17,7 @@ export const useCheckAuth = () => {
       const { uid, email, displayName, photoURL } = user;
       // Estado en authenticated para proteger las rutas
       dispatch(login({ uid, email, displayName, photoURL }));
-      dispatch(startLoadingNotes());
+      // dispatch(startLoadingNotes());
     });
   }, []);
   return {

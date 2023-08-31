@@ -51,7 +51,6 @@ export const RegisterPage = () => {
 
     if (!isValidForm) return;
     // alert(JSON.stringify(formState));
-    // onResetForm();
     dispatch(startRegisteringUserWithEmailAndPassword(formState));
   };
   return (

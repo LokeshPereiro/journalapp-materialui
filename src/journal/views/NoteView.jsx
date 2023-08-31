@@ -1,19 +1,19 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ImageGallery } from "../components";
+// import { ImageGallery } from "../components";
 import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
 import {
   DeleteOutline,
   SaveOutlined,
   UploadOutlined,
 } from "@mui/icons-material";
-import {
-  setActiveNote,
-  startDeletingNote,
-  startSaveNote,
-  startUploadingFiles,
-} from "../../store/journal";
+// import {
+//   setActiveNote,
+//   startDeletingNote,
+//   startSaveNote,
+//   startUploadingFiles,
+// } from "../../store/journal";
 
 import { useForm } from "../../hooks";
 import Swal from "sweetalert2";
@@ -34,7 +34,7 @@ export const NoteView = () => {
   }, [date]);
 
   useEffect(() => {
-    dispatch(setActiveNote(formState));
+    // dispatch(setActiveNote(formState));
   }, [formState]);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const NoteView = () => {
   }, [messageSaved]);
 
   const onSaveNote = () => {
-    dispatch(startSaveNote());
+    // dispatch(startSaveNote());
   };
 
   const fileInputRef = useRef();
@@ -54,15 +54,16 @@ export const NoteView = () => {
     if (target.files === 0) return;
     // console.log("Subiendo archivos...");
 
-    dispatch(startUploadingFiles(target.files));
+    // dispatch(startUploadingFiles(target.files));
   };
 
   const onDeleteNote = () => {
-    dispatch(startDeletingNote());
+    // dispatch(startDeletingNote());
   };
 
   return (
     <Grid
+      className="animate__animated animate__fadeIn animate__faster"
       container
       direction="row"
       justifyContent="space-between"
@@ -130,7 +131,7 @@ export const NoteView = () => {
         </Button>
       </Grid>
       {/* Imag Gallery */}
-      <ImageGallery images={activeNote.imageUrls} />
+      {/* <ImageGallery images={activeNote.imageUrls} /> */}
     </Grid>
   );
 };
